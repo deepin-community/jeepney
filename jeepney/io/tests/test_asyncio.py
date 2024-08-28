@@ -1,6 +1,8 @@
 import asyncio
 
+import async_timeout
 import pytest
+import pytest_asyncio
 
 from jeepney import DBusAddress, new_method_call
 from jeepney.bus_messages import message_bus, MatchRule
@@ -23,16 +25,15 @@ bus_peer = DBusAddress(
 )
 
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def connection():
-    conn = await open_dbus_connection(bus='SESSION')
-    yield conn
-    await conn.close()
+    async with (await open_dbus_connection(bus='SESSION')) as conn:
+        yield conn
 
 async def test_connect(connection):
     assert connection.unique_name.startswith(':')
 
-@pytest.fixture()
+@pytest_asyncio.fixture()
 async def router():
     async with open_dbus_router(bus='SESSION') as router:
         yield router
@@ -75,3 +76,16 @@ async def test_filter(router):
 
         signal_msg = await asyncio.wait_for(queue.get(), timeout=2.0)
         assert signal_msg.body == (name, '', router.unique_name)
+
+async def test_recv_after_connect():
+    # Can't use here:
+    # 1. 'connection' fixture
+    # 2. asyncio.wait_for()
+    # If (1) and/or (2) is used, the error won't be triggered.
+    conn = await open_dbus_connection(bus='SESSION')
+    try:
+        with pytest.raises(asyncio.TimeoutError):
+            async with async_timeout.timeout(0):
+                await conn.receive()
+    finally:
+        await conn.close()

@@ -22,14 +22,16 @@ implement other messages yourself.
 .. autofunction:: make_auth_anonymous
 
 .. data:: BEGIN
-   :type: bytes
 
    Send this just before switching to the D-Bus protocol.
 
-.. autoclass:: SASLParser
+.. autoclass:: Authenticator
+
+   .. versionchanged:: 0.7
+
+      This class was renamed from ``SASLParser`` and substantially changed.
 
    .. attribute:: authenticated
-      :type: bool
 
       Initially False, changes to True when authentication has succeeded.
 
@@ -37,16 +39,21 @@ implement other messages yourself.
 
       ``None``, or the raw bytes of an error message if authentication failed.
 
+   .. automethod:: data_to_send
+
    .. automethod:: feed
 
 .. autoexception:: AuthenticationError
 
+.. autoexception:: FDNegotiationError
+
 Typical flow
 ------------
 
-- Send a null byte to start.
-- Prepare & send an AUTH command, e.g. from :func:`make_auth_external`.
-- Feed received data to :class:`SASLParser` until either
-  :attr:`~.SASLParser.authenticated` or :attr:`~.SASLParser.error` is set.
-- Send :data:`BEGIN`.
-- Start sending & receiving D-Bus messages.
+1. Send the data from :meth:`Authenticator.data_to_send` (or
+   ``for req_data in authenticator``).
+2. Receive data from the server, pass to :meth:`Authenticator.feed`.
+3. Repeat 1 & 2 until :attr:`Authenticator.authenticated` is True,  or the for
+   loop exits.
+4. Send :data:`BEGIN`.
+5. Start sending & receiving D-Bus messages.

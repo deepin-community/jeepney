@@ -1,3 +1,62 @@
+jeepney (0.8.0-3) unstable; urgency=medium
+
+  * Team upload.
+  * d/control: build using the generic pyproject pybuild plugin.
+  * d/control: use 'execute_after_' instead of 'override_'
+  * d/control: Standards-Version bump to 4.6.1. No changes.
+
+ -- Louis-Philippe Véronneau <pollo@debian.org>  Fri, 02 Dec 2022 11:42:48 -0500
+
+jeepney (0.8.0-2) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Apply multi-arch hints.
+    + jeepney-doc: Add Multi-Arch: foreign.
+
+ -- Jelmer Vernooĳ <jelmer@debian.org>  Sun, 27 Nov 2022 14:45:10 +0000
+
+jeepney (0.8.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump python3-pytest-asyncio dependencies to 0.17, following upstream.
+  * Bump years in debian/copyright.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Sat, 09 Apr 2022 10:32:03 +0300
+
+jeepney (0.7.1-3) unstable; urgency=medium
+
+  * Build-depend on dh-python ≥ 5.20211214 to make sure python3-jeepney
+    does not depend on pytest and other packages from requires-extra
+    (closes: #1001754).
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Fri, 17 Dec 2021 14:34:06 +0300
+
+jeepney (0.7.1-2) unstable; urgency=medium
+
+  * Build-depend on dh-python ≥ 5.20211016 which has improved flit support.
+    - Stop passing --system distutils to pybuild for testing.
+    - Drop debian/python3-jeepney.pyremove, no longer needed.
+  * Bump Standards-Version to 4.6.0, no changes needed.
+  * Upload to unstable.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Sat, 04 Dec 2021 18:57:05 +0300
+
+jeepney (0.7.1-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Depend on python3-async-timeout for the tests.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Wed, 28 Jul 2021 21:35:52 +0300
+
+jeepney (0.7.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Synchronize package descriptions with README.rst updates.
+  * Remove PEP 610 direct_url.json. It contains the build path which is
+    useless and breaks reproducibility.
+
+ -- Dmitry Shachnev <mitya57@debian.org>  Tue, 13 Jul 2021 16:02:25 +0300
+
 jeepney (0.6.0-1) unstable; urgency=medium
 
   * New upstream release.
