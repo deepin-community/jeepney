@@ -1,17 +1,15 @@
 #!/usr/bin/make -f
 
 export PYBUILD_NAME=jeepney
-export PYBUILD_SYSTEM=flit
 
 %:
 	dh $@ --with python3,sphinxdoc --buildsystem=pybuild
 
-override_dh_auto_build:
-	dh_auto_build
+execute_after_dh_auto_build:
 	$(MAKE) -Cdocs html
 
 override_dh_auto_test:
-	dbus-run-session -- dh_auto_test -- --system distutils
+	dbus-run-session -- dh_auto_test
 
 override_dh_installdocs:
 	dh_installdocs -pjeepney-doc --doc-main-package=python3-jeepney

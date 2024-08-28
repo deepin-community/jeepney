@@ -7,6 +7,7 @@ API reference
    core
    common_msgs
    auth
+   fds
 
 .. toctree::
    :maxdepth: 2
@@ -17,3 +18,7 @@ API reference
    trio
    asyncio
    io_exceptions
+
+There is also a deprecated ``jeepney.io.tornado`` integration. Recent versions
+of Tornado are built on asyncio, so you can use the asyncio integration with
+Tornado applications.

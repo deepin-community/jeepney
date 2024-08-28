@@ -5,8 +5,9 @@ Test-Command: set -e
  ; done
 Depends: dbus,
          python3-all,
+         python3-async-timeout,
          python3-jeepney,
          python3-pytest,
-         python3-pytest-asyncio,
+         python3-pytest-asyncio (>= 0.17),
          python3-testpath,
          python3-trio
